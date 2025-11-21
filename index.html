@@ -688,13 +688,39 @@
 
                 <!-- Tab Content: Photography -->
                 <div id="content-photography" class="hobby-content space-y-4">
-                    <p class="text-base leading-relaxed">
-                        <em>Capturing the World:</em> Photography serves as a creative outlet, allowing me to capture the beauty in everyday life and during my travels. My focus tends to be on landscapes, architecture, and capturing candid moments that tell a story.
-                    </p>
-                    <p class="text-text-light text-sm">
-                        *Check out my photography: <a href="https://www.instagram.com/anindita.archive/?hl=en" target="_blank" class="text-primary hover:text-primary-dark">@anindita.archive</a>*
-                    </p>
-                </div>
+    <p class="text-base leading-relaxed">
+        <em>Capturing the World:</em> Photography serves as a creative outlet, allowing me to capture the beauty in everyday life and during my travels. My focus tends to be on landscapes, architecture, and capturing candid moments that tell a story.
+    </p>
+
+    <!-- Image Carousel Container -->
+    <div class="relative max-w-full mx-auto rounded-lg overflow-hidden shadow-lg border border-slate-700">
+        <!-- Image display area -->
+        <div id="carousel-images" class="relative w-full aspect-[4/3] bg-surface-dark transition-all duration-500 ease-in-out">
+            <!-- Images are loaded here by JavaScript -->
+            <img id="current-image" src="" alt="Photography Showcase" class="w-full h-full object-cover">
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button onclick="changePhoto(-1)" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-surface-dark/60 text-white p-3 rounded-r-lg hover:bg-primary/80 transition duration-300 z-10">
+            &#10094;
+        </button>
+        <button onclick="changePhoto(1)" class="absolute top-1/2 right-0 transform -translate-y-1/2 bg-surface-dark/60 text-white p-3 rounded-l-lg hover:bg-primary/80 transition duration-300 z-10">
+            &#10095;
+        </button>
+
+        <!-- Image Count Indicator -->
+        <div id="carousel-indicator" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-white bg-background-dark/50 px-3 py-1 rounded-full">
+            1 / 4
+        </div>
+    </div>
+    
+    <div class="text-slate-400 text-sm flex flex-col sm:flex-row justify-between items-center sm:items-start mt-4 border-t border-slate-700 pt-3">
+        *View my archive:*
+        <a href="https://www.instagram.com/anindita.archive/?hl=en" target="_blank" class="text-primary hover:underline transition duration-300 text-sm font-semibold">
+            Instagram Archive
+        </a>
+    </div>
+</div>
 
                 <!-- Tab Content: Travelling (List) -->
                 <div id="content-travelling" class="hobby-content space-y-4" style="display: none;">
