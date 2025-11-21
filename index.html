@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic & Professional Profile - Dr. Anindita Karmakar</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load Firebase (Required for Gemini API calls) -->
+    <script type="module">
+        // Basic configuration for API key and polyfills if needed
+    </script>
+
+    <!-- Configure Tailwind to use Inter font and switch to a darker theme by default -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        // Color scheme based on dark/light mode
+                        'primary': 'var(--color-primary)',
+                        'primary-dark': 'var(--color-primary-dark)',
+                        'background': 'var(--color-background)',
+                        'surface': 'var(--color-surface)',
+                        'unvisited': 'var(--color-unvisited)',
+                        'text-default': 'var(--color-text-default)',
+                        'text-light': 'var(--color-text-light)',
+                        'border-default': 'var(--color-border)',
+                        'card-hover': 'var(--color-card-hover)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* CSS Variables for Themes */
+        .dark-theme {
+            --color-primary: #38BDF8; /* Sky Blue 400 */
+            --color-primary-dark: #0EA5E9; /* Sky Blue 500 */
+            --color-background: #0F172A; /* Slate 900 */
+            --color-surface: #1E293B; /* Slate 800 */
+            --color-unvisited: #334155; /* Slate 700 */
+            --color-text-default: #E2E8F0; /* Slate 200 */
+            --color-text-light: #94A3B8; /* Slate 400 */
+            --color-border: #334155;
+            --color-card-hover: #475569;
+        }
+        .light-theme {
+            --color-primary: #1D4ED8; /* Blue 700 */
+            --color-primary-dark: #1E40AF; /* Blue 800 */
+            --color-background: #F8FAFC; /* White-ish */
+            --color-surface: #FFFFFF;
+            --color-unvisited: #CBD5E1; /* Slate 300 */
+            --color-text-default: #1E293B; /* Slate 900 */
+            --color-text-light: #475569; /* Slate 600 */
+            --color-border: #E2E8F0;
+            --color-card-hover: #F1F5F9;
+        }
+
+        /* Base styles using variables */
+        body {
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            background-color: var(--color-background);
+            color: var(--color-text-default);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Navigation Header */
+        .sticky-header {
+            background-color: var(--color-surface);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid var(--color-border);
+        }
+        .nav-link {
+            color: var(--color-text-light);
+            transition: color 0.3s, font-weight 0.3s;
+        }
+        .nav-link:hover {
+            color: var(--color-primary);
+        }
+        .nav-link.active {
+            color: var(--color-primary);
+            font-weight: 700;
+        }
+        .nav-link.active:hover {
+            color: var(--color-primary-dark);
+        }
+
+        /* Content Cards (Removed heavy borders/shadows) */
+        .content-card {
+            background-color: var(--color-surface);
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, outline 0.3s;
+            outline: 1px solid var(--color-border); /* Subtle border */
+        }
+        .content-card:hover {
+            outline: 2px solid var(--color-primary); /* Primary color highlight on hover */
+            background-color: var(--color-card-hover);
+        }
+        .publication-item {
+            font-size: 0.875rem; /* text-sm */
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--color-border);
+        }
+        .publication-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        .award-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: 9999px;
+            color: white;
+            background-color: var(--color-primary-dark);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Inner Tab Buttons */
+        .tab-button {
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            color: var(--color-text-light);
+        }
+        .tab-button:hover {
+            color: var(--color-primary);
+            border-color: var(--color-border);
+        }
+        .tab-button.active {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background-color: transparent;
+            font-weight: 600;
+        }
+        
+        /* Loading/AIGenerated Box */
+        .ai-box {
+            @apply mt-4 p-4 rounded-lg text-sm transition-all duration-500;
+            background-color: var(--color-background);
+            border: 1px solid var(--color-primary);
+            color: var(--color-text-default);
+        }
+        .ai-loading {
+            @apply animate-pulse text-primary;
+        }
+        .ai-response-text {
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body class="dark-theme">
+
+    <div class="tooltip" id="tooltip"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 sticky-header">
+        <nav class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo / Name -->
+                <div class="flex-shrink-0">
+                    <a href="#" class="text-xl font-extrabold text-primary hover:text-primary-dark transition duration-300" onclick="showMainTab('about')">
+                        Dr. A. Karmakar
+                    </a>
+                </div>
+                <!-- Navigation Links and Theme Toggle -->
+                <div class="space-x-4 sm:space-x-8 flex items-center">
+                    <!-- Main Navigation Links -->
+                    <a href="#" id="nav-about" class="nav-link active px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('about')">About</a>
+                    <a href="#" id="nav-positions" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('positions')">Positions</a>
+                    <a href="#" id="nav-education" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('education')">Education</a>
+                    <a href="#" id="nav-publications" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('publications')">Publications</a>
+                    <a href="#" id="nav-recognition" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('recognition')">Awards</a>
+                    <a href="#" id="nav-hobbies" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('hobbies')">Hobbies</a>
+
+                    <!-- Theme Toggle -->
+                    <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface transition duration-300" onclick="toggleTheme()">
+                        <svg id="sun-icon" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                        </svg>
+                        <svg id="moon-icon" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
+
+        <!-- All Main Content is Wrapped in Tab Sections -->
+
+        <!-- Hero/Introduction Section (Active by default) -->
+        <section id="about" class="main-tab-content mb-16">
+            <div class="content-card p-8 sm:p-10 flex flex-col md:flex-row items-center md:items-start gap-8">
+                
+                <!-- Left Column: Text Summary -->
+                <div class="md:w-3/4 order-2 md:order-1 text-center md:text-left">
+                    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-text-default mb-2">
+                        Dr. Anindita Karmakar
+                    </h1>
+                    <p class="text-lg sm:text-xl font-light text-primary mb-4">
+                        Postdoctoral Fellow | TIFR, Mumbai
+                    </p>
+                    <div class="text-md leading-relaxed space-y-3">
+                        <p>
+                            I am an Experimental Nuclear Physicist specializing in <em>nuclear structure and gamma-ray spectroscopy</em>. My work focuses on fundamental questions in High Energy Nuclear Physics, particularly investigating <em>octupole correlations and transverse wobbling in the A ~ 100 mass region.</em>
+                        </p>
+                        <p class="text-text-light">
+                            (Ph.D. from Saha Institute of Nuclear Physics, 2024). Experienced in instrumentation, data analysis (ROOT, RADWARE), and theoretical modeling.
+                        </p>
+                    </div>
+
+                    <!-- Contact Buttons for the About section -->
+                    <div class="mt-6 flex justify-center md:justify-start space-x-4 text-sm">
+                        <a href="mailto:aninditakarmakar333@gmail.com" class="text-primary hover:text-primary-dark transition duration-300 flex items-center" title="Email">
+                            &#9993; aninditakarmakar333@gmail.com
+                        </a>
+                        <a href="https://orcid.org/0000-0002-8409-503X" target="_blank" class="text-primary hover:text-primary-dark transition duration-300 flex items-center" title="ORCID ID">
+                            &#x1F517; ORCID
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Column: Photo/Avatar Placeholder -->
+                <div class="md:w-1/4 order-1 md:order-2 flex justify-center">
+                    <!-- 
+                        ACTION REQUIRED: 
+                        Replace the src value below with your actual, publicly hosted image URL.
+                        Example: src="https://example.com/your-profile-photo.jpg" 
+                    -->
+                    <img 
+                        src="https://placehold.co/160x160/253956/FFFFFF?text=Dr.+AK+Photo" 
+                        alt="Profile Photo Placeholder" 
+                        class="w-40 h-40 object-cover rounded-full border-4 border-primary shadow-2xl"
+                        onerror="this.onerror=null; this.src='https://placehold.co/160x160/253956/FFFFFF?text=Dr.+AK+Photo';"
+                    >
+                </div>
+            </div>
+        </section>
+        
+        <!-- Professional Positions Section -->
+        <section id="positions" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Professional Positions</h2>
+
+            <div class="space-y-6">
+                <!-- Position Entry 1: Postdoctoral Fellow (Current) -->
+                <div class="content-card">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-primary">Postdoctoral Fellow</h3>
+                        <span class="text-sm text-text-light font-mono">May 2025 – Present</span>
+                    </div>
+                    <p class="text-lg text-text-light mt-1">Department of Nuclear and Atomic Physics, Tata Institute of Fundamental Research (TIFR), Mumbai</p>
+                    <p class="text-sm mt-3 leading-relaxed">
+                        Supervisor: Prof. Rudrajyoti Palit. Focused on advanced nuclear structure experiments and data analysis.
+                    </p>
+                </div>
+                
+                <!-- Position Entry 2: Visiting Research Fellow (Past) -->
+                <div class="content-card">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-primary">Visiting Scholar/Research Fellow</h3>
+                        <span class="text-sm text-text-light font-mono">Jan 2025 – May 2025</span>
+                    </div>
+                    <p class="text-lg text-text-light mt-1">Tata Institute of Fundamental Research (TIFR), Mumbai</p>
+                    <p class="text-sm mt-3 leading-relaxed">
+                        Worked under the supervision of Prof. Rudrajyoti Palit, conducting nuclear structure studies and experimental data analysis.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Education</h2>
+
+            <div class="space-y-6">
+                <!-- Education Entry 1: PhD -->
+                <div class="content-card">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-primary">Ph.D. in Experimental Nuclear Physics</h3>
+                        <span class="text-sm text-text-light font-mono">2019 – 2024</span>
+                    </div>
+                    <p class="text-lg text-text-light mt-1">Saha Institute of Nuclear Physics & Homi Bhabha National Institute</p>
+                    <p class="text-sm mt-3 leading-relaxed">
+                        <em>Dissertation:</em> <a href="http://www.hbni.ac.in/phdthesis/phys/PHYS05201904009.pdf" target="_blank" class="text-primary hover:text-primary-dark transition duration-300">Nuclear structure studies at high angular momentum</a> (Viva Voce: Oct 21, 2024). <br>
+                        <em>Supervisors:</em> Prof. Sukalyan Chattopadhyay and Dr. Gopal Mukherjee. 
+                    </p>
+
+                    <!-- Gemini API: Thesis Summarizer -->
+                    <div class="mt-4">
+                        <button id="summarize-thesis-btn" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-md hover:bg-primary-dark transition duration-300" onclick="summarizeThesis()">
+                            ✨ Summarize Thesis for General Audience
+                        </button>
+                        <div id="thesis-summary-output" class="ai-box hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Education Entry 2: Post MSc -->
+                <div class="content-card">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-primary">Post M.Sc. in Experimental Physics</h3>
+                        <span class="text-sm text-text-light font-mono">2019 – 2020</span>
+                    </div>
+                    <p class="text-lg text-text-light mt-1">Saha Institute of Nuclear Physics</p>
+                    <p class="text-sm mt-3 leading-relaxed">
+                        Projects included: 1) <em>Design and fabrication of a large area thin window setup for gas detectors</em> and 2) <em>In search for Multiple 0<sup>+</sup> state in <sup>100</sup>Ru</em>.
+                    </p>
+                </div>
+                
+                <!-- Education Entry 3: MSc -->
+                <div class="content-card">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold text-primary">M.Sc. in Physics (Gold Medalist, AIR 10 CSIR-NET JRF)</h3>
+                        <span class="text-sm text-text-light font-mono">2017 – 2019</span>
+                    </div>
+                    <p class="text-lg text-text-light mt-1">Indian Institute of Technology, Roorkee (IITR)</p>
+                    <p class="text-sm mt-3 leading-relaxed">
+                        <em>Project:</em> "Study of Spectroscopic factor strengths using Ab Initio approaches". <br>
+                        <em>Internship:</em> "Higgs Detection: A theoretical preview" at Saha Institute of Nuclear Physics.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Publications Section (Updated with Tabs and Corrected Notation) -->
+        <section id="publications" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Selected Publications</h2>
+            
+            <div class="content-card p-4 sm:p-6">
+                
+                <!-- Tab Buttons (Updated) -->
+                <div class="flex border-b border-border-default mb-6 -mt-2">
+                    <button id="tab-journals" class="tab-button active flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showPublicationTab('journals')">
+                        Journal Articles
+                    </button>
+                    <button id="tab-conferences" class="tab-button flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showPublicationTab('conferences')">
+                        Conference Proceedings
+                    </button>
+                    <button id="tab-schools" class="tab-button flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showPublicationTab('schools')">
+                        Schools & Workshops
+                    </button>
+                </div>
+
+                <!-- Tab Content: Journal Articles -->
+                <div id="content-journals" class="tab-content space-y-4">
+                    
+                    <h3 class="text-xl font-semibold text-primary mb-4">Journal Articles (Primary Author/Collaborator)</h3>
+                    
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.48550/arXiv.2306.07670" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Possibility of stable octupole deformation in <sup>100</sup>Ru</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by <strong>A. Karmakar</strong>, P. Datta, et al. | Phys. Rev. C <strong>109</strong>, 054312 (2024).
+                            [<a href="https://doi.org/10.1103/PhysRevC.109.054312" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.48550/arXiv.2411.10976" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Measurement of enhanced electric dipole transition strengths at high spin in <sup>100</sup>Ru: Possible observation of octupole deformation</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            <strong>A. Karmakar</strong>, Nazira Nazir, P. Datta, et al. | Phys. Rev. C <strong>110</strong>, L051302 (2024).
+                            [<a href="https://doi.org/10.1103/PhysRevC.110.L051302" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.48550/arXiv.2403.08235" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Evidence of doublet wobbling excitation mode in <sup>105</sup>Pd</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by <strong>A. Karmakar</strong>, P. Datta, N. Rather, et al. | Phys. Rev. C <strong>112</strong>, 034323 (2025).
+                            [<a href="https://doi.org/10.1103/46gk-nqsh" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://www.sciencedirect.com/science/article/pii/S0375947425002519" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em><sup>98</sup>Mo: A possible candidate for octupole collectivity</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by <strong>A. Karmakar*</strong>, et al. | Nucl. Phys. A <strong>1066</strong>, 123265 (2025).
+                            [<a href="https://www.sciencedirect.com/science/article/pii/S0375947425002519" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.1016/j.physletb.2025.139642" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Conclusive evidence of magnetic rotational band in <sup>57</sup>Fe: Extending the shears mechanism to the fp shell orbital</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by S. Basu, G. Mukherjee, ..., <strong>A. Karmakar</strong>, et al. | Phys. Lett. B <strong>868</strong>, 139642 (2025).
+                            [<a href="https://doi.org/10.1016/j.physletb.2025.139642" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.1016/j.nuclphysa.2025.123142" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Decay of <sup>131</sup>La</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by S. Banerjee, S. Bhattacharyya, ..., <strong>A. Karmakar</strong>, et al. | Nucl. Phys. A <strong>1061</strong>, 123142 (2025).
+                            [<a href="https://doi.org/10.1016/j.nuclphysa.2025.123142" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.1016/j.nuclphysa.2025.123092" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Rotational band based on &pi;f<sub>7/2</sub> orbital in <sup>55</sup>Mn</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by S. Basu, G. Mukherjee, ..., <strong>A. Karmakar</strong>, et al. | Nucl. Phys. A <strong>1059</strong>, 123092 (2025).
+                            [<a href="https://doi.org/10.1016/j.nuclphysa.2025.123092" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.1016/j.physletb.2024.138565" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Coexistence of low-K oblate and high-K prolate g<sub>9/2</sub> proton-hole bands in <sup>115</sup>Sb</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by Shabir Dar, S. Bhattacharyya, ..., <strong>A. Karmakar</strong>, et al. | Phys. Lett. B <strong>851</strong>, 138565 (2024).
+                            [<a href="https://doi.org/10.1016/j.physletb.2024.138565" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://link.springer.com/article/10.1140/epja/s10050-023-01147-9" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Revealing new structures in odd–odd <sup>54</sup>Mn nucleus</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by S. Basu, G. Mukherjee, ..., <strong>A. Karmakar</strong>, et al. | Eur. Phys. Jour. A <strong>59</strong>, 229 (2023).
+                            [<a href="https://link.springer.com/article/10.1140/epja/s10050-023-01147-9" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                    <div class="publication-item">
+                        <a href="https://doi.org/10.1016/j.nds.2023.10.002" target="_blank" class="text-text-default hover:text-primary transition duration-300 font-medium leading-normal">
+                            <em>Nuclear Structure and Decay Data for A = 222 Isobars</em>
+                        </a> 
+                        <span class="text-text-light text-xs block mt-1">
+                            by Balraj Singh, M.S. Basunia, ..., <strong>A. Karmakar</strong>, et al. | Nuclear Data Sheets <strong>192</strong>, 315-421(2023).
+                            [<a href="https://doi.org/10.1016/j.nds.2023.10.002" target="_blank" class="text-primary hover:text-primary-dark">DOI</a>]
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Conference Proceedings -->
+                <div id="content-conferences" class="tab-content space-y-4" style="display: none;">
+                    
+                    <h3 class="text-xl font-semibold text-primary mb-4">Thesis Related Proceedings</h3>
+                    <div class="publication-item">
+                        <em>Evidence of transverse wobbling in <sup>101</sup>Ru</em> by <strong>A. Karmakar</strong> et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Enhancement of B(E1) rates in <sup>100</sup>Ru</em> by <strong>A. Karmakar</strong> et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Observation of signature partner bands in <sup>105</sup>Pd with one wobbling phonon configuration</em> by <strong>A. Karmakar</strong> et al. *67<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2023).
+                    </div>
+                    <div class="publication-item">
+                        <em>First observation of multiple E3 transitions in <sup>100</sup>Ru</em> by <strong>A. Karmakar</strong> et al. *66<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2022).
+                    </div>
+                    <div class="publication-item">
+                        <em>Coexistence of and octupole bands in <sup>100</sup>Ru</em> by <strong>A. Karmakar</strong> et al. *65<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2021).
+                    </div>
+                    <div class="publication-item">
+                        <em>Study of Spectroscopic Factor Strengths Using Ab Initio Approach</em> by <strong>A. Karmakar</strong> et al. *64<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2019).
+                    </div>
+
+                    <h3 class="text-xl font-semibold text-primary mb-4 pt-4 border-t border-border-default">Collaborative Work Proceedings</h3>
+                    <div class="publication-item">
+                        <em>Decay of <sup>131</sup>La</em> by Shrabasti Banerjee et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Is there a wobbling band in <sup>129</sup>Cs</em> S. Chakraborty et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Gamma-ray spectroscopy of <sup>56</sup>Fe</em> S. Panwar et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Evidence of E5 symmetry in <sup>74</sup>Se</em> Sajad Ali et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Positive and Negative Parity Band Structcures in <sup>57</sup>Ni</em> S. S. Nayak et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Z5 Critical Point Symmetry in <sup>76</sup>Se</em> Rahul Biswas et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Role of Octupole-Octupole Interaction in High-Spin Nuclear States</em> Nazira Nazir et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Experimental study on <sup>192</sup>Tl</em> Snigdha Pal et al. *68<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2024).
+                    </div>
+                    <div class="publication-item">
+                        <em>Newly observed M1 band in odd-A <sup>57</sup>Fe</em> S. Basu et al. *67<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2023).
+                    </div>
+                    <div class="publication-item">
+                        <em>Level scheme of <sup>128</sup>Cs below the isomeric &Gamma;<sup>&pi;</sup>=(9<sup>+</sup>) state</em> S. Chakraborty et al. *67<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2023).
+                    </div>
+                    <div class="publication-item">
+                        <em>In-beam spectroscopic study of <sup>209</sup>At</em> Sneha Das et al. *67<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2023).
+                    </div>
+                    <div class="publication-item">
+                        <em>Observation of signature partner of i<sub>13/2</sub> band in <sup>199</sup>Hg</em> Soumik Bhattacharya et al. *67<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2023).
+                    </div>
+                    <div class="publication-item">
+                        <em>Lifetime measurements of g<sub>9/2</sub> positive parity band in <sup>57</sup>Fe</em> S. Basu et al. *66<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2022).
+                    </div>
+                    <div class="publication-item">
+                        <em>Rotational band structure in odd A <sup>55</sup>Mn</em> S. Basu et al. *66<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2022).
+                    </div>
+                    <div class="publication-item">
+                        <em>Observation of the oblate g<sub>9/2</sub> proton-hole band in <sup>115</sup>Sb</em> Shabir Dar et al. *66<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2022).
+                    </div>
+                    <div class="publication-item">
+                        <em>Deformed nuclear shapes around N, Z=28 in A=50-60 region</em> S. Basu et al. *65<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2021).
+                    </div>
+                    <div class="publication-item">
+                        <em>First observation of the &pi;g<sub>7/2</sub> band in <sup>115</sup>Sb</em> Shabir Dar et al. *65<sup>th</sup> DAE BRNS symposium on Nuclear Physics* (2021).
+                    </div>
+                </div>
+
+                <!-- Tab Content: Schools & Workshops -->
+                <div id="content-schools" class="tab-content space-y-2" style="display: none;">
+                    <p class="text-sm text-text-light mb-4">
+                        A chronological list of schools, workshops, and conferences attended/presented at.
+                    </p>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Dec 2024:</span> <strong>68<sup>th</sup> DAE symposium on Nuclear Physics</strong> (Poster Presentation) - IIT Roorkee, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Oct 2024:</span> <strong>International Conference on Nuclear Physics and Applications (ICNPA-2024)</strong> (Poster Presentation) - University of Delhi, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Aug 2024:</span> <strong>Young Physicists' Colloquium</strong> (Oral Presentation) - Saha Institute of Nuclear Physics, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Jul 2024:</span> <strong>Nuclear Structure 2024</strong> (Poster Presentation) - Argonne National Laboratory, USA
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Jan 2024:</span> <strong>Cutting Edge research in Nuclear Physics: Symmetry, Structure, and Applications</strong> (Poster Presentation) - Presidency University, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Dec 2023:</span> <strong>67<sup>th</sup> DAE symposium on Nuclear Physics</strong> (Oral Presentation) - IIT Indore, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Feb 2023:</span> <strong>School on Data Acquisition and Analysis</strong> - IUAC, Delhi, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Dec 2022:</span> <strong>66<sup>th</sup> DAE symposium on Nuclear Physics</strong> (Oral Presentation) - Cotton University, India
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Oct 2022:</span> <strong>Workshop on Nuclear Structure and Decay Data School</strong> (Oral Presentation) - ICTP, Trieste, Italy
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Mar 2022:</span> <strong>INGA@VECC: the Milestones Achieved and the Miles Ahead</strong> (Oral Presentation) - Online
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Dec 2021:</span> <strong>65<sup>th</sup> DAE symposium on Nuclear Physics</strong> (Oral Presentation) - Online
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Nov 2021:</span> <strong>African Nuclear Physics School</strong> (Oral Presentation) - Online
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Jun 2021:</span> <strong>INGA: Recent Results and Future Perspectives</strong> - Online
+                    </div>
+                    <div class="conference-item">
+                        <span class="text-sm font-mono text-text-light w-24 inline-block">Aug 2019:</span> <strong>Undergraduate Physics Symposium PRESISION</strong> (Poster Presentation) - Presidency University, India
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Expertise/Skills Section -->
+        <section id="experience" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Expertise & Skills</h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Research Experience -->
+                <div class="content-card">
+                    <h3 class="text-xl font-semibold text-primary">Research Domains</h3>
+                    <ul class="text-sm mt-3 leading-relaxed list-disc list-inside space-y-2 ml-4">
+                        <li data-term="nuclear structure">Nuclear Structure and Gamma-ray Spectroscopy</li>
+                        <li data-term="octupole correlations">Octupole correlations</li>
+                        <li data-term="transverse wobbling">Transverse Wobbling in A ~ 100 region</li>
+                        <li data-term="experimental setup">Experimental setup, detector calibration, and data acquisition (VECC, TIFR)</li>
+                        <li data-term="ab-initio nuclear models">Ab-initio nuclear model calculations and shell model approaches</li>
+                    </ul>
+                </div>
+                
+                <!-- Technical Skills -->
+                <div class="content-card">
+                    <h3 class="text-xl font-semibold text-primary">Technical & Software Skills</h3>
+                    <ul class="text-sm mt-3 leading-relaxed list-disc list-inside space-y-2 ml-4">
+                        <li><em>Data Analysis:</em> ROOT, RADWARE, INGASORT</li>
+                        <li><em>Programming:</em> C++, Python, Fortran, &LaTeX;</li>
+                        <li><em>Instrumentation:</em> Handling Clover and LEPS detector arrays</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Gemini API: Research Explainer -->
+            <div class="mt-8 content-card p-6">
+                <h3 class="text-xl font-semibold text-primary mb-4">✨ Research Topic Explainer</h3>
+                <p class="text-sm text-text-light mb-4">
+                    Select a complex term from your research domains to generate a simple, non-expert explanation.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <select id="research-term-select" class="flex-grow bg-background text-text-default border border-border-default rounded-md px-3 py-2 text-sm focus:ring-primary focus:border-primary">
+                        <option value="" disabled selected>Select a Research Term</option>
+                        <option value="Octupole correlations in nuclear physics">Octupole correlations</option>
+                        <option value="Transverse wobbling in nuclear physics">Transverse Wobbling</option>
+                        <option value="Gamma-ray spectroscopy">Gamma-ray Spectroscopy</option>
+                        <option value="Ab-initio nuclear model calculations">Ab-initio Nuclear Models</option>
+                    </select>
+                    <button id="explain-term-btn" class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-md hover:bg-primary-dark transition duration-300" onclick="explainResearchTerm()">
+                        Explain Term
+                    </button>
+                </div>
+                <div id="research-explainer-output" class="ai-box hidden"></div>
+            </div>
+        </section>
+
+        <!-- Professional Recognition/Awards Section -->
+        <section id="recognition" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Awards & Recognition</h2>
+            
+            <div class="content-card flex flex-wrap gap-3">
+                <div class="award-badge">
+                    &#127891; CSIR-NET JRF (AIR 10) - 2018
+                </div>
+                <div class="award-badge">
+                    &#127941; Gold Medal (M.Sc. Departmental Topper) - 2019
+                </div>
+                <div class="award-badge">
+                    &#127891; Best Poster Award - ICNPA-2024
+                </div>
+                <div class="award-badge">
+                    &#127891; Best Poster Award - 68th DAE Symposium - 2024
+                </div>
+                <div class="award-badge">
+                    &#127891; INSPIRE Fellowship (2014-2019)
+                </div>
+                <div class="award-badge">
+                    &#127891; NGPA National Level Topper (Top 1%) - 2017
+                </div>
+                <div class="award-badge">
+                    &#127891; Best Poster Presenter - PRESISION 2019
+                </div>
+                <div class="award-badge">
+                    &#127891; GATE Qualified - 2020
+                </div>
+            </div>
+        </section>
+        
+        <!-- Hobbies Section -->
+        <section id="hobbies" class="main-tab-content mb-16" style="display: none;">
+            <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Hobbies & Personal Interests</h2>
+            
+            <div class="content-card p-4 sm:p-6">
+                
+                <!-- Tab Buttons for Hobbies -->
+                <div class="flex border-b border-border-default mb-6 -mt-2">
+                    <button id="hobby-photography" class="tab-button active flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showHobbyTab('photography')">
+                        &#128247; Photography
+                    </button>
+                    <button id="hobby-travelling" class="tab-button flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showHobbyTab('travelling')">
+                        &#127757; Travelling
+                    </button>
+                    <button id="hobby-food" class="tab-button flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showHobbyTab('food')">
+                        &#127869; Food
+                    </button>
+                </div>
+
+                <!-- Tab Content: Photography -->
+                <div id="content-photography" class="hobby-content space-y-4">
+                    <p class="text-base leading-relaxed">
+                        <em>Capturing the World:</em> Photography serves as a creative outlet, allowing me to capture the beauty in everyday life and during my travels. My focus tends to be on landscapes, architecture, and capturing candid moments that tell a story.
+                    </p>
+                    <p class="text-text-light text-sm">
+                        *Check out my photography: <a href="https://www.instagram.com/anindita.archive/?hl=en" target="_blank" class="text-primary hover:text-primary-dark">@anindita.archive</a>*
+                    </p>
+                </div>
+
+                <!-- Tab Content: Travelling (List) -->
+                <div id="content-travelling" class="hobby-content space-y-4" style="display: none;">
+                    <p class="text-base leading-relaxed text-center">
+                        <em>Exploring India:</em> I enjoy travelling extensively and have visited numerous states and union territories.
+                    </p>
+                    <p class="text-text-light text-sm text-center">
+                         *Follow my adventures: <a href="https://www.instagram.com/pen_and_penne/?hl=en" target="_blank" class="text-primary hover:text-primary-dark">@pen_and_penne</a>*
+                    </p>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-text-default pt-4 border-t border-border-default">
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Assam</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Meghalaya</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Odisha</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">West Bengal</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Sikkim</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Karnataka</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Punjab</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Haryana</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Chandigarh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Himachal Pradesh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Uttarakhand</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Andaman Nicobar</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Andhra Pradesh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Telangana</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Delhi</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Kerala</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Tamil Nadu</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Uttar Pradesh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Maharashtra</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Kashmir</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Madhya Pradesh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Jharkhand</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Arunachal Pradesh</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Goa</span>
+                        <span class="p-1 rounded bg-surface-dark/50 text-center">Daman</span>
+                    </div>
+                </div>
+
+                <!-- Tab Content: Food -->
+                <div id="content-food" class="hobby-content space-y-4" style="display: none;">
+                    <p class="text-base leading-relaxed">
+                        <em>Culinary Exploration:</em> I enjoy exploring different cuisines and documenting food experiences, often combining it with my passion for travel.
+                    </p>
+                    <p class="text-text-light text-sm">
+                        *Read my food blog: <a href="https://pennetagon.wordpress.com/?utm_source=ig&utm_medium=social&utm_content=link_in_bio" target="_blank" class="text-primary hover:text-primary-dark">pennetagon.wordpress.com</a>*
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface sticky-header py-4 mt-12">
+        <div class="max-w-4xl mx-auto px-4 text-center text-xs text-text-light">
+            &copy; 2025 Dr. Anindita Karmakar. Built with Tailwind CSS and Gemini API.
+        </div>
+    </footer>
+
+
+    <script>
+        const apiKey = ""; // API Key is left blank, will be provided at runtime by the environment
+        const modelName = "gemini-2.5-flash-preview-09-2025";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${modelName}:generateContent?key=${apiKey}`;
+        const THESIS_TITLE = "Nuclear structure studies at high angular momentum";
+        
+        // --- Theme Toggle Logic ---
+        
+        function toggleTheme() {
+            const body = document.body;
+            const isDark = body.classList.contains('dark-theme');
+            
+            if (isDark) {
+                body.classList.remove('dark-theme');
+                body.classList.add('light-theme');
+                localStorage.setItem('theme', 'light');
+                document.getElementById('moon-icon').style.display = 'none';
+                document.getElementById('sun-icon').style.display = 'inline-block';
+            } else {
+                body.classList.remove('light-theme');
+                body.classList.add('dark-theme');
+                localStorage.setItem('theme', 'dark');
+                document.getElementById('moon-icon').style.display = 'inline-block';
+                document.getElementById('sun-icon').style.display = 'none';
+            }
+        }
+
+        function loadTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            const body = document.body;
+
+            body.classList.remove('dark-theme', 'light-theme');
+            body.classList.add(savedTheme + '-theme');
+
+            if (savedTheme === 'light') {
+                document.getElementById('moon-icon').style.display = 'none';
+                document.getElementById('sun-icon').style.display = 'inline-block';
+            } else {
+                document.getElementById('moon-icon').style.display = 'inline-block';
+                document.getElementById('sun-icon').style.display = 'none';
+            }
+        }
+
+        // --- Main Tab Switching Logic ---
+
+        function showMainTab(tabName) {
+            // Hide all main content sections
+            document.querySelectorAll('.main-tab-content').forEach(section => {
+                section.style.display = 'none';
+            });
+            // Show the selected section
+            const activeSection = document.getElementById(tabName);
+            if (activeSection) {
+                activeSection.style.display = 'block';
+            }
+
+            // Update navigation links (active state)
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            const activeNav = document.getElementById(`nav-${tabName}`);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            // Scroll to top of the content area
+            document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // --- Inner Tab Switching Logic (Publications) ---
+
+        function showPublicationTab(tabName) {
+            // Hide all content and remove active class from all buttons
+            document.querySelectorAll('#publications .tab-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.querySelectorAll('#publications .tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected content and set the button to active
+            document.getElementById(`content-${tabName}`).style.display = 'block';
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+        }
+
+        // --- Inner Tab Switching Logic (Hobbies) ---
+
+        function showHobbyTab(tabName) {
+            // Hide all content and remove active class from all buttons
+            document.querySelectorAll('#hobbies .hobby-content').forEach(content => {
+                content.style.display = 'none';
+            });
+            document.querySelectorAll('#hobbies .tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // Show the selected content and set the button to active
+            document.getElementById(`content-${tabName}`).style.display = 'block';
+            document.getElementById(`hobby-${tabName}`).classList.add('active');
+        }
+
+        // --- Gemini API Function: Thesis Summarizer ---
+
+        async function summarizeThesis() {
+            const outputElement = document.getElementById('thesis-summary-output');
+            const button = document.getElementById('summarize-thesis-btn');
+            
+            outputElement.classList.remove('hidden');
+            outputElement.innerHTML = `<p class="ai-loading">Generating summary...</p>`;
+            button.disabled = true;
+
+            const systemPrompt = "You are an expert science communicator. Your task is to take a technical PhD thesis title and explain its core focus in a single, non-technical paragraph suitable for a general audience. Do not use complex jargon or formal academic phrasing. Keep it brief and engaging.";
+            const userQuery = `Please provide a simple, single-paragraph summary of the following PhD thesis: "${THESIS_TITLE}"`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+            
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const text = result.candidates?.[0]?.content?.parts?.[0]?.text || "Error: Could not generate summary.";
+                
+                outputElement.innerHTML = `<p class="ai-response-text">${text}</p>`;
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                outputElement.innerHTML = `<p class="text-red-500">Error: Failed to connect to AI service. Try again later.</p>`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        // --- Gemini API Function: Research Term Explainer ---
+
+        async function explainResearchTerm() {
+            const selectElement = document.getElementById('research-term-select');
+            const term = selectElement.value;
+            const outputElement = document.getElementById('research-explainer-output');
+            const button = document.getElementById('explain-term-btn');
+
+            if (!term) {
+                outputElement.classList.add('hidden');
+                return;
+            }
+
+            outputElement.classList.remove('hidden');
+            outputElement.innerHTML = `<p class="ai-loading">Generating explanation for '${term}'...</p>`;
+            button.disabled = true;
+
+            const systemPrompt = "You are a physics outreach specialist. Provide a brief, simple, single-paragraph explanation of the requested nuclear physics concept. The explanation must be accurate, avoid highly technical jargon, and use an analogy if appropriate. Do not use any HTML formatting.";
+            const userQuery = `Explain the following term simply for a non-physicist: ${term}`;
+
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                tools: [{ "google_search": {} }], // Use search grounding for accuracy
+                systemInstruction: { parts: [{ text: systemPrompt }] },
+            };
+            
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const candidate = result.candidates?.[0];
+                let text = candidate?.content?.parts?.[0]?.text || "Error: Could not generate explanation.";
+                let sourcesHtml = '';
+
+                // Extract and format sources
+                const groundingMetadata = candidate?.groundingMetadata;
+                if (groundingMetadata && groundingMetadata.groundingAttributions) {
+                    const sources = groundingMetadata.groundingAttributions
+                        .map(attr => ({ uri: attr.web?.uri, title: attr.web?.title }))
+                        .filter(source => source.uri && source.title);
+                    
+                    if (sources.length > 0) {
+                        sourcesHtml = '<div class="mt-3 pt-3 border-t border-border-default text-text-light text-xs">';
+                        sourcesHtml += 'Sources: ';
+                        sources.forEach((source, index) => {
+                            sourcesHtml += `<a href="${source.uri}" target="_blank" class="hover:text-primary-dark">${source.title}</a>${index < sources.length - 1 ? ', ' : ''}`;
+                        });
+                        sourcesHtml += '</div>';
+                    }
+                }
+
+                outputElement.innerHTML = `<p class="ai-response-text">${text}</p>${sourcesHtml}`;
+            } catch (error) {
+                console.error("Gemini API Error:", error);
+                outputElement.innerHTML = `<p class="text-red-500">Error: Failed to connect to AI service. Try again later.</p>`;
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        // --- Utility Function for API Calls (with Exponential Backoff) ---
+
+        async function fetchWithRetry(url, options, retries = 3) {
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.status !== 429 && response.ok) { // 429 is too many requests
+                        return response;
+                    }
+                } catch (error) {
+                    console.warn(`Fetch attempt ${i + 1} failed.`, error);
+                }
+
+                if (i < retries - 1) {
+                    const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            throw new Error('All fetch retries failed.');
+        }
+
+        // --- Initialization ---
+
+        window.onload = () => {
+            loadTheme();
+            // Ensure the initial tab state is set correctly (About is visible)
+            showMainTab('about');
+            showPublicationTab('journals');
+            showHobbyTab('photography');
+        };
+    </script>
+</body>
+</html>
