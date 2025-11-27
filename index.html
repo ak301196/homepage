@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AK says Hello..!</title>
+    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Load Firebase (Required for Gemini API calls) -->
     <script type="module">
         // Basic configuration for API key and polyfills if needed
     </script>
 
+    <!-- Configure Tailwind to use Inter font and switch to a darker theme by default -->
     <script>
         tailwind.config = {
             theme: {
@@ -154,21 +157,30 @@
         .ai-response-text {
             white-space: pre-wrap;
         }
+
+        /* CUSTOM ADDITION: Full Justification */
+        .text-justified {
+            text-align: justify;
+        }
     </style>
 </head>
 <body class="dark-theme">
 
     <div class="tooltip" id="tooltip"></div>
 
+    <!-- Navigation Header -->
     <header class="sticky top-0 z-50 sticky-header">
         <nav class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
+                <!-- Logo / Name -->
                 <div class="flex-shrink-0">
                     <a href="#" class="text-xl font-extrabold text-primary hover:text-primary-dark transition duration-300" onclick="showMainTab('about')">
                         Dr. A. Karmakar
                     </a>
                 </div>
-                <div class="space-x-4 sm:space-x-8 flex flex-wrap justify-center items-center">
+                <!-- Navigation Links and Theme Toggle -->
+               <div class="space-x-4 sm:space-x-8 flex flex-wrap justify-center items-center">
+                    <!-- Main Navigation Links -->
                     <a href="#" id="nav-about" class="nav-link active px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('about')">About</a>
                     <a href="#" id="nav-positions" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('positions')">Positions</a>
                     <a href="#" id="nav-education" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('education')">Education</a>
@@ -176,6 +188,7 @@
                     <a href="#" id="nav-recognition" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('recognition')">Awards</a>
                     <a href="#" id="nav-hobbies" class="nav-link px-3 py-2 rounded-md text-sm font-medium" onclick="showMainTab('hobbies')">Hobbies</a>
 
+                    <!-- Theme Toggle -->
                     <button id="theme-toggle" class="p-2 rounded-full hover:bg-surface transition duration-300" onclick="toggleTheme()">
                         <svg id="sun-icon" class="w-5 h-5 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="display:none;">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
@@ -189,11 +202,16 @@
         </nav>
     </header>
 
+    <!-- Main Content Container -->
     <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
 
+        <!-- All Main Content is Wrapped in Tab Sections -->
+
+        <!-- Hero/Introduction Section (Active by default) -->
         <section id="about" class="main-tab-content mb-16">
             <div class="content-card p-8 sm:p-10 flex flex-col md:flex-row items-center md:items-start gap-8">
                 
+                <!-- Left Column: Text Summary (Updated Content) -->
                 <div class="md:w-3/4 order-2 md:order-1 text-center md:text-left">
                     <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight tracking-tight text-text-default mb-2">
                         Dr. Anindita Karmakar
@@ -202,32 +220,44 @@
                         Experimental Nuclear Physicist | TIFR, Mumbai
                     </p>
                     
-                    <div class="text-md leading-relaxed space-y-3 mb-6">
+                    <!-- 1. GENERAL ABOUT ME SECTION (New, engaging content) -->
+                    <div class="text-md leading-relaxed space-y-3 mb-6 text-justified">
                         <p>
                             Welcome! I am passionate about uncovering the mysteries of the atomic nucleus, particularly where fundamental forces collide to create exotic phenomena. My work is dedicated to translating complex gamma-ray data into insights about nuclear structure and dynamics—essentially, peering into the heart of matter to see how it spins, vibrates, and deforms. 
+                        </p>
+                        <!-- ADDED TEXT HERE -->
+                        <p>
+                            Beyond the lab, I am an explorer driven by a deep curiosity about human creativity and history. I seek out new perspectives through photography, studying sculptures and art, and, of course, travelling to explore historical places and world cuisines.
                         </p>
                     
                     </div>
 
+                    <!-- 2. PHD RESEARCH SECTION (Shifted content here) -->
                     <h3 class="text-xl font-semibold text-text-default border-t border-border-default pt-4 mb-3">
                         Ph.D. Research Focus
                     </h3>
                     <div class="p-4 rounded-lg bg-background border border-border-default">
-                        <p class="text-sm leading-relaxed">
+                        <p class="text-sm leading-relaxed text-justified">
                             I am an Experimental Nuclear Physicist specializing in nuclear structure and gamma-ray spectroscopy. My work focuses on fundamental questions in Nuclear Physics, particularly investigating octupole correlations (a pear-shaped deformation) and  wobbling (an exotic nuclear rotation) in the **A ~ 100** mass region.
                             <br><span class="text-text-light font-mono text-xs mt-1 block">(Ph.D. from Saha Institute of Nuclear Physics, 2024). Experienced in instrumentation, data analysis (ROOT, RADWARE), and theoretical modeling.</span>
                         </p>
                     </div>
 
+                    <!-- Contact Buttons for the About section -->
                     <div class="mt-6 flex flex-wrap justify-center md:justify-start space-x-4 sm:space-x-6 text-sm">
                         <a href="mailto: anindita.tifr@gmail.com" class="text-primary hover:text-white transition duration-300 flex items-center" title="Email">
+    <!-- Gmail/Mailbox SVG Icon - Forced Color (Red approximation) -->
     <svg class="w-4 h-4 mr-1" fill="#EA4335" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6zm-2 0l-8 5.25L4 6h16zm0 12H4V8l8 5.25L20 8v10z"/>
     </svg>
     anindita.tifr@gmail.com
                         </a>
                         <a href="https://orcid.org/0000-0002-8409-503X" target="_blank" class="text-primary hover:text-primary-dark transition duration-300 flex items-center" title="ORCID ID">
-                            &#x1F517; ORCID
+                            <!-- Official ORCID iD icon SVG, styled to match the primary link color by removing inline style -->
+                            <svg class="w-4 h-4 mr-1 fill-current" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M256 128C256 57.308 198.692 0 128 0S0 57.308 0 128s57.308 128 128 128 128-57.308 128-128zm-89.734 69.366V152.09c0-8.682-10.743-12.83-20.172-12.83h-7.38c-8.528 0-18.064 4.512-18.064 12.83v45.362h-38.308V65.808h37.49V99.55c.348 7.38 10.158 13.048 18.064 13.048h7.38c9.058 0 20.172-5.668 20.172-13.048V65.808h38.308v131.558zm-72.936-163.78c-10.37 0-18.818 9.38-18.818 19.336 0 9.776 8.448 19.166 18.818 19.166 10.37 0 18.818-9.39 18.818-19.166s-8.448-19.336-18.818-19.336z"/>
+                            </svg>
+                            ORCID
                         </a>
                         <a href="https://www.linkedin.com/in/aninditak1996/" target="_blank" class="text-primary hover:text-white transition duration-300 flex items-center" title="LinkedIn">
     <svg class="w-4 h-4 mr-1 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.529-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
@@ -236,6 +266,7 @@
                     </div>
                 </div>
 
+                <!-- Right Column: Photo/Avatar Placeholder -->
                 <div class="md:w-1/4 order-1 md:order-2 flex justify-center">
                     
                     <img 
@@ -248,49 +279,55 @@
             </div>
         </section>
         
+        <!-- Professional Positions Section -->
         <section id="positions" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Professional Positions</h2>
 
             <div class="space-y-6">
+                <!-- Position Entry 1: Postdoctoral Fellow (Current) -->
                 <div class="content-card">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-primary">Postdoctoral Fellow</h3>
                         <span class="text-sm text-text-light font-mono">May 2025 – Present</span>
                     </div>
                     <p class="text-lg text-text-light mt-1">Department of Nuclear and Atomic Physics, Tata Institute of Fundamental Research (TIFR), Mumbai</p>
-                    <p class="text-sm mt-3 leading-relaxed">
+                    <p class="text-sm mt-3 leading-relaxed text-justified">
                         Supervisor: Prof. Rudrajyoti Palit. Focused on advanced nuclear structure experiments and data analysis.
                     </p>
                 </div>
                 
+                <!-- Position Entry 2: Visiting Research Fellow (Past) -->
                 <div class="content-card">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-primary">Visiting Scholar/Research Fellow</h3>
                         <span class="text-sm text-text-light font-mono">Jan 2025 – May 2025</span>
                     </div>
                     <p class="text-lg text-text-light mt-1">Tata Institute of Fundamental Research (TIFR), Mumbai</p>
-                    <p class="text-sm mt-3 leading-relaxed">
+                    <p class="text-sm mt-3 leading-relaxed text-justified">
                         Worked under the supervision of Prof. Rudrajyoti Palit, conducting nuclear structure studies and experimental data analysis.
                     </p>
                 </div>
             </div>
         </section>
 
+        <!-- Education Section -->
         <section id="education" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Education</h2>
 
             <div class="space-y-6">
+                <!-- Education Entry 1: PhD -->
                 <div class="content-card">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-primary">Ph.D. in Experimental Nuclear Physics</h3>
                         <span class="text-sm text-text-light font-mono">2019 – 2024</span>
                     </div>
                     <p class="text-lg text-text-light mt-1">Saha Institute of Nuclear Physics & Homi Bhabha National Institute</p>
-                    <p class="text-sm mt-3 leading-relaxed">
+                    <p class="text-sm mt-3 leading-relaxed text-justified">
                         <em>Dissertation:</em> <a href="http://www.hbni.ac.in/phdthesis/phys/PHYS05201904009.pdf" target="_blank" class="text-primary hover:text-primary-dark transition duration-300">Nuclear structure studies at high angular momentum</a> (Viva Voce: Oct 21, 2024). <br>
                         <em>Supervisors:</em> Prof. Sukalyan Chattopadhyay and Dr. Gopal Mukherjee. 
                     </p>
 
+                    <!-- Gemini API: Thesis Summarizer -->
                     <div class="mt-4">
                         <button id="summarize-thesis-btn" class="px-4 py-2 bg-primary text-white text-xs font-bold rounded-md hover:bg-primary-dark transition duration-300" onclick="summarizeThesis()">
                             ✨ Summarize Thesis for General Audience
@@ -299,24 +336,26 @@
                     </div>
                 </div>
 
+                <!-- Education Entry 2: Post MSc -->
                 <div class="content-card">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-primary">Post M.Sc. in Experimental Physics</h3>
                         <span class="text-sm text-text-light font-mono">2019 – 2020</span>
                     </div>
                     <p class="text-lg text-text-light mt-1">Saha Institute of Nuclear Physics</p>
-                    <p class="text-sm mt-3 leading-relaxed">
+                    <p class="text-sm mt-3 leading-relaxed text-justified">
                         Projects included: 1) <em>Design and fabrication of a large area thin window setup for gas detectors</em> and 2) <em>In search for Multiple 0<sup>+</sup> state in <sup>100</sup>Ru</em>.
                     </p>
                 </div>
                 
+                <!-- Education Entry 3: MSc -->
                 <div class="content-card">
                     <div class="flex justify-between items-start">
                         <h3 class="text-xl font-semibold text-primary">M.Sc. in Physics (Gold Medalist, AIR 10 CSIR-NET JRF)</h3>
                         <span class="text-sm text-text-light font-mono">2017 – 2019</span>
                     </div>
                     <p class="text-lg text-text-light mt-1">Indian Institute of Technology, Roorkee (IITR)</p>
-                    <p class="text-sm mt-3 leading-relaxed">
+                    <p class="text-sm mt-3 leading-relaxed text-justified">
                         <em>Project:</em> "Study of Spectroscopic factor strengths using Ab Initio approaches". <br>
                         <em>Internship:</em> "Higgs Detection: A theoretical preview" at Saha Institute of Nuclear Physics.
                     </p>
@@ -324,11 +363,13 @@
             </div>
         </section>
         
+        <!-- Publications Section (Updated with Tabs and Corrected Notation) -->
         <section id="publications" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Selected Publications</h2>
             
             <div class="content-card p-4 sm:p-6">
                 
+                <!-- Tab Buttons (Updated) -->
                 <div class="flex border-b border-border-default mb-6 -mt-2">
                     <button id="tab-journals" class="tab-button active flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showPublicationTab('journals')">
                         Journal Articles
@@ -341,6 +382,7 @@
                     </button>
                 </div>
 
+                <!-- Tab Content: Journal Articles -->
                 <div id="content-journals" class="tab-content space-y-4">
                     
                     <h3 class="text-xl font-semibold text-primary mb-4">Journal Articles (Primary Author/Collaborator)</h3>
@@ -437,6 +479,7 @@
                     </div>
                 </div>
 
+                <!-- Tab Content: Conference Proceedings -->
                 <div id="content-conferences" class="tab-content space-y-4" style="display: none;">
                     
                     <h3 class="text-xl font-semibold text-primary mb-4">Thesis Related Proceedings</h3>
@@ -513,8 +556,9 @@
                     </div>
                 </div>
 
+                <!-- Tab Content: Schools & Workshops -->
                 <div id="content-schools" class="tab-content space-y-2" style="display: none;">
-                    <p class="text-sm text-text-light mb-4">
+                    <p class="text-sm text-text-light mb-4 text-justified">
                         A chronological list of schools, workshops, and conferences attended/presented at.
                     </p>
                     <div class="conference-item">
@@ -565,31 +609,35 @@
         </section>
 
 
+        <!-- Expertise/Skills Section -->
         <section id="experience" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Expertise & Skills</h2>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Research Experience -->
                 <div class="content-card">
                     <h3 class="text-xl font-semibold text-primary">Research Domains</h3>
                     <ul class="text-sm mt-3 leading-relaxed list-disc list-inside space-y-2 ml-4">
-                        <li data-term="nuclear structure">Nuclear Structure and Gamma-ray Spectroscopy</li>
-                        <li data-term="octupole correlations">Octupole correlations</li>
-                        <li data-term="transverse wobbling">Transverse Wobbling in $A \sim 100$ region</li>
-                        <li data-term="experimental setup">Experimental setup, detector calibration, and data acquisition (VECC, TIFR)</li>
-                        <li data-term="ab-initio nuclear models">Ab-initio nuclear model calculations and shell model approaches</li>
+                        <li data-term="nuclear structure" class="text-justified">Nuclear Structure and Gamma-ray Spectroscopy</li>
+                        <li data-term="octupole correlations" class="text-justified">Octupole correlations</li>
+                        <li data-term="transverse wobbling" class="text-justified">Transverse Wobbling in $A \sim 100$ region</li>
+                        <li data-term="experimental setup" class="text-justified">Experimental setup, detector calibration, and data acquisition (VECC, TIFR)</li>
+                        <li data-term="ab-initio nuclear models" class="text-justified">Ab-initio nuclear model calculations and shell model approaches</li>
                     </ul>
                 </div>
                 
+                <!-- Technical Skills -->
                 <div class="content-card">
                     <h3 class="text-xl font-semibold text-primary">Technical & Software Skills</h3>
                     <ul class="text-sm mt-3 leading-relaxed list-disc list-inside space-y-2 ml-4">
-                        <li><em>Data Analysis:</em> ROOT, RADWARE, INGASORT</li>
-                        <li><em>Programming:</em> C++, Python, Fortran, $\LaTeX$</li>
-                        <li><em>Instrumentation:</em> Handling Clover and LEPS detector arrays</li>
+                        <li class="text-justified"><em>Data Analysis:</em> ROOT, RADWARE, INGASORT</li>
+                        <li class="text-justified"><em>Programming:</em> C++, Python, Fortran, $\LaTeX$</li>
+                        <li class="text-justified"><em>Instrumentation:</em> Handling Clover and LEPS detector arrays</li>
                     </ul>
                 </div>
             </div>
 
+            <!-- Gemini API: Research Explainer -->
             <div class="mt-8 content-card p-6">
                 <h3 class="text-xl font-semibold text-primary mb-4">✨ Research Topic Explainer</h3>
                 <p class="text-sm text-text-light mb-4">
@@ -611,6 +659,7 @@
             </div>
         </section>
 
+        <!-- Professional Recognition/Awards Section -->
         <section id="recognition" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Awards & Recognition</h2>
             
@@ -642,11 +691,13 @@
             </div>
         </section>
         
+        <!-- Hobbies Section -->
         <section id="hobbies" class="main-tab-content mb-16" style="display: none;">
             <h2 class="text-2xl font-bold text-text-default mb-8 border-b border-border-default pb-3">Hobbies & Personal Interests</h2>
             
             <div class="content-card p-4 sm:p-6">
                 
+                <!-- Tab Buttons for Hobbies -->
                 <div class="flex border-b border-border-default mb-6 -mt-2">
                     <button id="hobby-photography" class="tab-button active flex-1 py-3 text-sm font-semibold transition duration-300" onclick="showHobbyTab('photography')">
                         &#128247; Photography
@@ -659,16 +710,21 @@
                     </button>
                 </div>
 
+                <!-- Tab Content: Photography -->
                 <div id="content-photography" class="hobby-content space-y-4">
-    <p class="text-base leading-relaxed">
+    <p class="text-base leading-relaxed text-justified">
         <em>Capturing the World:</em> Photography serves as a creative outlet, allowing me to capture the beauty in everyday life and during my travels. My focus tends to be on landscapes, architecture, and capturing candid moments that tell a story.
     </p>
 
+    <!-- Image Carousel Container -->
     <div class="relative max-w-full mx-auto rounded-lg overflow-hidden shadow-lg border border-slate-700">
+        <!-- Image display area -->
         <div id="carousel-images" class="relative w-full aspect-[4/3] bg-surface-dark transition-all duration-500 ease-in-out">
+            <!-- Images are loaded here by JavaScript -->
             <img id="current-image" src="" alt="Photography Showcase" class="w-full h-full object-cover">
         </div>
 
+        <!-- Navigation Buttons -->
         <button onclick="changePhoto(-1)" class="absolute top-1/2 left-0 transform -translate-y-1/2 bg-surface-dark/60 text-white p-3 rounded-r-lg hover:bg-primary/80 transition duration-300 z-10">
             &#10094;
         </button>
@@ -676,6 +732,7 @@
             &#10095;
         </button>
 
+        <!-- Image Count Indicator -->
         <div id="carousel-indicator" class="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs text-white bg-background-dark/50 px-3 py-1 rounded-full">
             1 / 4
         </div>
@@ -689,8 +746,9 @@
     </div>
 </div>
 
+                <!-- Tab Content: Travelling (List) -->
                 <div id="content-travelling" class="hobby-content space-y-4" style="display: none;">
-                    <p class="text-base leading-relaxed text-center">
+                    <p class="text-base leading-relaxed text-justified">
                         <em>Exploring India:</em> I enjoy travelling extensively and have visited numerous states and union territories.
                     </p>
                     <p class="text-text-light text-sm text-center">
@@ -725,8 +783,9 @@
                     </div>
                 </div>
 
+                <!-- Tab Content: Food -->
                 <div id="content-food" class="hobby-content space-y-4" style="display: none;">
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-justified">
                         <em>Culinary Exploration:</em> I enjoy exploring different cuisines and documenting food experiences, often combining it with my passion for travel.
                     </p>
                     <p class="text-text-light text-sm">
@@ -738,6 +797,7 @@
 
     </main>
 
+    <!-- Footer -->
     <footer class="bg-surface sticky-header py-4 mt-12">
         <div class="max-w-4xl mx-auto px-4 text-center text-xs text-text-light">
             &copy; 2025 Dr. Anindita Karmakar.
